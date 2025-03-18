@@ -113,6 +113,9 @@ if ($result->num_rows > 0) {
                             <div id="ratingResult"></div>
                             <div class="hidden" id="ratingValue"></div>
                         </label>
+                        <label for="iruzkinak">Iruzkinak</label>
+                        <textarea name="iruzkinak" id="iruzkinak" cols="30" rows="10" placeholder="Iruzkinak hemen idatzi"></textarea>
+                        <br>
 
                         <?php
                         require_once(APP_DIR  . '/src/views/main/index/modal.php');
