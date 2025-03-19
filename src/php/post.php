@@ -14,17 +14,17 @@ require_once(APP_DIR . '/src/php/connect.php');
 if (count($_POST) > 0) {
     switch ($_POST["action"]) {
         case "checkInput": {
-                echo checkInput($_POST);
-                break;
-            }
+            echo checkInput($_POST);
+            break;
+        }
         case "saveAnswer": {
-                echo saveAnswer($_POST);
-                break;
-            }
+            echo saveAnswer($_POST);
+            break;
+        }
         case "changeConfig": {
-                echo changeConfig($_POST);
-                break;
-            }
+            echo changeConfig($_POST);
+            break;
+        }
     }
 }
 die;
@@ -114,9 +114,12 @@ function saveAnswer($inputValue)
 
         if (saveAnswerInDb($courseId, $userId, $valoration, $answerIsCorrect, $valid, $teacher)) {
             writeLog("Zuzen gorde da", [
-                "courseId" => $courseId, "userId" => $userId,
-                "valoration" => $valoration, "answerIsCorrect" => $answerIsCorrect,
-                "valid" => $valid, "teacher" => $teacher
+                "courseId" => $courseId,
+                "userId" => $userId,
+                "valoration" => $valoration,
+                "answerIsCorrect" => $answerIsCorrect,
+                "valid" => $valid,
+                "teacher" => $teacher
             ]);
             return json_encode(["code" => "200", "message" => ""]);
         } else {
@@ -192,13 +195,36 @@ function checkIfAlreadyHasAnswered($courseId, $email)
 
 function changeConfig($inputValue)
 {
-    //XML konfigurazioa
-    $config = simplexml_load_file(APP_DIR . '/conf.xml');
+    $xmlFile = APP_DIR . '/conf.xml';
 
-    //TODO: GARATZEKO
+    $config = simplexml_load_file($xmlFile);
+    var_dump($config);
 
-    //Orri nagusira redirekzioa egiteko
-    $location = HREF_APP_DIR . "/src/views/main/index.php";
-    
-    header('Location: '. $location);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'changeConfig') {
+        $mainColor = $_POST['mainColor'];
+
+        if (!is_object($config)) {
+            $config = simplexml_load_file($xmlFile);
+        }
+
+        if ($config === false) {
+            die("Ez da XML fitxategia ongi kargatu");
+        }
+
+        if (is_object($config)) {
+            $config->mainColor = $mainColor;
+
+            if (!$config->asXML($xmlFile)) {
+                die("Arazoa: Ezin izan da XML fitxategia gorde.");
+            }
+        } else {
+            die("Arazoa XML-arekin.");
+        }
+
+        $location = HREF_APP_DIR . "/src/views/main/index.php";
+        header('Location: ' . $location);
+        exit();
+    }
 }
+
+?>
