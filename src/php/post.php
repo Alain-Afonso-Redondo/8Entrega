@@ -198,9 +198,13 @@ function changeConfig($inputValue)
     // XML konfigurazio fitxategiaren bidea definitu
     $xmlFile = APP_DIR . '/conf.xml';
 
-    // XML fitxategia kargatu SimpleXML objektu batean
-    $config = simplexml_load_file($xmlFile);
-
+ //XML konfigurazioa
+ $config = simplexml_load_file(APP_DIR . '/conf.xml');
+ 
+ $config->mainColor = $inputValue["mainColor"];
+ $config->footerColor = $inputValue["footerColor"];
+ $result = $config->asXML(APP_DIR . '/conf.xml');
+ //
     // Uneko konfigurazioa bistaratu (debug egiteko)
     var_dump($config);
 
