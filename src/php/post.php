@@ -195,32 +195,45 @@ function checkIfAlreadyHasAnswered($courseId, $email)
 
 function changeConfig($inputValue)
 {
+    // XML konfigurazio fitxategiaren bidea definitu
     $xmlFile = APP_DIR . '/conf.xml';
 
+    // XML fitxategia kargatu SimpleXML objektu batean
     $config = simplexml_load_file($xmlFile);
+
+    // Uneko konfigurazioa bistaratu (debug egiteko)
     var_dump($config);
 
+    // Egiaztatu formulario bat bidali den POST metodoaren bidez eta ekintza 'changeConfig' dela
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'changeConfig') {
+        // Formulario bidez jasotako balioak eskuratu
         $mainColor = $_POST['mainColor'];
+        $footerColor = $_POST['footerColor'];
 
+        // Egiaztatu XML objektua ondo kargatu den; ez bada, berriro kargatu
         if (!is_object($config)) {
             $config = simplexml_load_file($xmlFile);
         }
 
+        // XML kargatzeak huts egiten badu, errorea erakutsi eta exekuzioa eten
         if ($config === false) {
-            die("Ez da XML fitxategia ongi kargatu");
+            die("Ez da XML fitxategia ongi kargatu"); // "XML fitxategia ondo kargatu ez da"
         }
 
+        // XML objektua ondo kargatu bada, aldaketak egin
         if (is_object($config)) {
             $config->mainColor = $mainColor;
+            $config->footerColor = $footerColor;
 
+            // Aldaketak XML fitxategian gorde
             if (!$config->asXML($xmlFile)) {
-                die("Arazoa: Ezin izan da XML fitxategia gorde.");
+                die("Arazoa: Ezin izan da XML fitxategia gorde."); // "Arazoa: XML fitxategia ezin izan da gorde"
             }
         } else {
-            die("Arazoa XML-arekin.");
+            die("Arazoa XML-arekin."); // "Arazoa XMLarekin"
         }
 
+        // Erabiltzailea orri nagusira birbideratu aldaketak gorde ondoren
         $location = HREF_APP_DIR . "/src/views/main/index.php";
         header('Location: ' . $location);
         exit();
