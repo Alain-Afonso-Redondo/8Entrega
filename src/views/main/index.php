@@ -119,7 +119,7 @@ if ($result->num_rows > 0) {
                         </label>
                         <form action="gorde_iruzkinak.php" method="POST">
                             <label for="iruzkinak">Iruzkinak</label>
-                            <textarea name="iruzkina" id="iruzkinak" cols="30" rows="10"
+                            <textarea name="iruzkinak" id="iruzkinak" cols="30" rows="10"
                                 placeholder="Iruzkinak hemen idatzi"></textarea>
                             <br>
                             <div class="middle_text">
@@ -128,27 +128,35 @@ if ($result->num_rows > 0) {
                         </form>
                         <div id="iruzkinak_container">
                             <h3>Iruzkinak:</h3>
-                            <ul>
-                                <?php
-                                if (file_exists('config.xml')) {
-                                    $xml = simplexml_load_file('config.xml');
-                                    if (!empty($xml->iruzkinak->iruzkina)) {
-                                        foreach ($xml->iruzkinak->iruzkina as $index => $iruzkina) {
-                                            echo "<li>" . htmlspecialchars($iruzkina) . " ";
-                                            echo "<form action='ezabatu_iruzkinak.php' method='POST' style='display:inline;'>";
-                                            echo "<input type='hidden' name='index' value='$index'>";
-                                            echo "<button type='submit'>Ezabatu</button>";
-                                            echo "</form>";
-                                            echo "</li>";
-                                        }
-                                    } else {
-                                        echo "<li>Oraindik ez dago iruzkinik.</li>";
+                            <?php
+                            $xmlFile = APP_DIR . '/conf.xml';
+
+                            if (file_exists($xmlFile)) {
+                                $xml = simplexml_load_file($xmlFile);
+
+                                if ($xml !== false && isset($xml->iruzkinak)) {
+                                    echo "<ul>";
+                                    $kontagailua = 0;
+
+                                    foreach ($xml->iruzkinak->children() as $iruzkina) {
+                                        echo "<li>" . htmlspecialchars($iruzkina) . " ";
+                                        echo "<form action='ezabatu_iruzkinak.php' method='POST' style='display:inline;'>";
+                                        echo "<input type='hidden' name='index' value='$kontagailua'>";
+
+                                        echo "</form>";
+                                        echo "</li>";
+                                        $kontagailua++;
                                     }
+                                    echo "</ul>";
                                 } else {
-                                    echo "<li>Oraindik ez dago iruzkinik.</li>";
+                                    echo "<p>Oraindik ez dago iruzkinik.</p>";
                                 }
-                                ?>
-                            </ul>
+                            } else {
+                                echo "<p>Errorea: XML fitxategia ezin izan da kargatu.</p>";
+                            }
+
+
+                            ?>
                         </div>
                         <?php
                         require_once(APP_DIR . '/src/views/main/index/modal.php');
