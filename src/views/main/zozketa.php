@@ -22,7 +22,7 @@ require_once(APP_DIR . '/src/views/parts/header.php');
 
     $conn = getConnection();
         
-    $sql3 = "SELECT * FROM 8entrega.balorazioa WHERE zuzen_erantzun = 1 AND valid = 1 and teacher=0 ORDER BY RAND() LIMIT 1;";
+    $sql3 = "SELECT * FROM balorazioa WHERE zuzen_erantzun = 1 AND valid = 1 and teacher=0 ORDER BY RAND() LIMIT 1;";
     $result2 = $conn->query($sql3); //Nonbaitetik ekartzen badezu toki horretan close egin da aurrretik sartu teamsen
     
     if ($result2) {
@@ -30,7 +30,7 @@ require_once(APP_DIR . '/src/views/parts/header.php');
 
         $erabiltzaile_id = $row2['erabiltzaile_id'];
 
-        $sql2 = "SELECT * FROM 8entrega.erabiltzaileak WHERE id =" . $erabiltzaile_id . "";
+        $sql2 = "SELECT * FROM goierriAzoka.erabiltzaileak WHERE id =" . $erabiltzaile_id . "";
 
         if ($result = $conn->query($sql2)) {
             if ($result->num_rows > 0) {

@@ -8,7 +8,7 @@ require_once($_SERVER["DOCUMENT_ROOT"] . $APP_DIR . '/src/views/parts/layouts/la
 
 require_once(APP_DIR . '/src/views/parts/sidebar.php');
 
-require_once(APP_DIR . '/src/views/parts/header.php');
+require_once(APP_DIR  . '/src/views/parts/header.php');
 
 //DBra joan
 require_once(APP_DIR . '/src/php/connect.php');
@@ -37,7 +37,7 @@ if ($result->num_rows > 0) {
     $active = $row["active"];
 
     if ($active == 1) {
-        ?>
+?>
         <div class="middle_text">
             <h1><span id="laburbiLdura_base_datos">
                     <?= $izena ?>
@@ -48,25 +48,23 @@ if ($result->num_rows > 0) {
             <div>
                 <?php
                 if (!is_null($multimedia_type) && $multimedia_type == Constants::YT_VIDEO) {
-                    ?>
-                    <iframe width="560" height="315" src="<?= $bideo_esteka ?>" title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-                    <?php
+                ?>
+                    <iframe width="560" height="315" src="<?= $bideo_esteka ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <?php
                 } else if (!is_null($multimedia_type) && $multimedia_type == Constants::LOCAL_IMAGE) {
-                    ?>
-                        <img class="mainImage" src="<?= HREF_APP_DIR ?>/public/<?= $argazki_esteka ?>" alt="argazkia">
-                    <?php
+                ?>
+                    <img class="mainImage" src="<?= HREF_APP_DIR ?>/public/<?= $argazki_esteka ?>" alt="argazkia">
+                <?php
                 } else if (!is_null($multimedia_type) && $multimedia_type == Constants::LOCAL_VIDEO) {
-                    ?>
-                            <video class="mainImage" controls>
-                                <source src="<?= HREF_APP_DIR ?>/public/<?= $bideo_esteka ?>" type="video/mp4" />
-                            </video>
-                    <?php
+                ?>
+                    <video class="mainImage" controls>
+                        <source src="<?= HREF_APP_DIR ?>/public/<?= $bideo_esteka ?>" type="video/mp4" />
+                    </video>
+                <?php
                 } else if (!is_null($multimedia_type) && $multimedia_type == Constants::DEFAULT_IMAGE) {
-                    ?>
-                                <img class="mainImage" src="<?= HREF_APP_DIR ?>/public/goierriEskolaHandia.jpg" alt="argazkia">
-                    <?php
+                ?>
+                    <img class="mainImage" src="<?= HREF_APP_DIR ?>/public/goierriEskolaHandia.jpg" alt="argazkia">
+                <?php
                 }
                 ?>
             </div>
@@ -79,7 +77,7 @@ if ($result->num_rows > 0) {
             </div>
             <?php
             if ($scanned) {
-                ?>
+            ?>
                 <div class="middle_items form_div">
                     <div id="errorMessage">
                         <ul>
@@ -100,9 +98,7 @@ if ($result->num_rows > 0) {
                     <input type="hidden" id="courseId" value="<?= $kurtsoa ?>" />
                     <div class="form">
                         <label for="email">Email:<span class="asterisco">*</span></label>
-                        <input type="email" name="email" id="email" placeholder="xxx_xxx_xxx@goierrieskola.org"
-                            pattern="(([a-zA-Z]{3}_[a-zA-Z]{3}_)([a-zA-Z]{3})?(_[0-9]{4})?|[a-z]{5,})@(goierrieskola\.org|goierrieskola\.eus)$"
-                            required>
+                        <input type="email" name="email" id="email" placeholder="xxx_xxx_xxx@goierrieskola.org" pattern="(([a-zA-Z]{3}_[a-zA-Z]{3}_)([a-zA-Z]{3})?(_[0-9]{4})?|[a-z]{5,})@(goierrieskola\.org|goierrieskola\.eus)$" required>
                         <br>
                         <label for="balorazioa">Balorazioa<span class="asterisco" id="balorazioa">*</span>:
                             <i id="info-icon" class="fa fa-info-circle"></i>
@@ -159,7 +155,7 @@ if ($result->num_rows > 0) {
                             ?>
                         </div>
                         <?php
-                        require_once(APP_DIR . '/src/views/main/index/modal.php');
+                        require_once(APP_DIR  . '/src/views/main/index/modal.php');
                         ?>
 
                         <br>
@@ -168,15 +164,15 @@ if ($result->num_rows > 0) {
                         </div>
                     </div>
                 </div>
-                <?php
+            <?php
             } else {
-                ?>
+            ?>
                 <div class="mainMessage qr_explanation">
                     <p>
                         Galdera erantzuteko QR-a irakurri behar duzu mugikorrarekin. Animatu eta parte hartu!
                     </p>
                 </div>
-                <?php
+            <?php
             }
             ?>
 
@@ -186,10 +182,10 @@ if ($result->num_rows > 0) {
 
         <?php
         if (!is_null($multimedia_type) && $multimedia_type == Constants::DEFAULT_IMAGE) {
-            ?>ms-appid:W~C:\Users\alain\eclipse\java-2024-09\eclipse\eclipse.exe
-            <!-- Defektuzko argazkia badauka beheran okupatu egingo du. -->
-            <div class="botomSpace"></div>
-            <?php
+        ?>ms-appid:W~C:\Users\alain\eclipse\java-2024-09\eclipse\eclipse.exe
+        <!-- Defektuzko argazkia badauka beheran okupatu egingo du. -->
+        <div class="botomSpace"></div>
+<?php
         }
     } else {
         echo "Barkatu eragozpenak. Arazo bat gertatu da.";
@@ -197,5 +193,5 @@ if ($result->num_rows > 0) {
         echo "<br>";
     }
 }
-require_once(APP_DIR . '/src//views/parts/layouts/layoutBottom.php');
+require_once(APP_DIR  . '/src//views/parts/layouts/layoutBottom.php');
 ?>
