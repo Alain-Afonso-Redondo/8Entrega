@@ -30,11 +30,12 @@ writeLog("Orria kargatu da", ["url" => $actual_link, "get" => json_encode($_GET)
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <?php
     //XMLko konfiguraziotik hartzen dute informazioa
-
-    $mainColor = "#a1a2a3";
-    $footerColor = "#555555";
-
+    $config = simplexml_load_file(APP_DIR . '/conf.xml');
+    $mainColor = $config->mainColor;
+    $footerColor = $config->footerColor;
+ 
     ?>
+ 
     <style>
         :root {
             --mainColor: <?= $mainColor ?>;
