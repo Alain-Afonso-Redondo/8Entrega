@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    
+    <iruzkinak>
+        
+    </iruzkinak>
 
-    <mainColor>#000000</mainColor>
-    <footerColor>#d0d09f</footerColor>
+    <mainColor>#800040</mainColor>
+    <footerColor>#808000</footerColor>
 
-    
+
 </config>

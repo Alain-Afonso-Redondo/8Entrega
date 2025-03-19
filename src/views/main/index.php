@@ -113,10 +113,47 @@ if ($result->num_rows > 0) {
                             <div id="ratingResult"></div>
                             <div class="hidden" id="ratingValue"></div>
                         </label>
-                        <label for="iruzkinak">Iruzkinak</label>
-                        <textarea name="iruzkinak" id="iruzkinak" cols="30" rows="10" placeholder="Iruzkinak hemen idatzi"></textarea>
-                        <br>
+                        <form action="gorde_iruzkinak.php" method="POST">
+                            <label for="iruzkinak">Iruzkinak</label>
+                            <textarea name="iruzkinak" id="iruzkinak" cols="30" rows="10"
+                                placeholder="Iruzkinak hemen idatzi"></textarea>
+                            <br>
+                            <div class="middle_text">
+                                <button type="submit">Iruzkinak bidali</button>
+                            </div>
+                        </form>
+                        <div id="iruzkinak_container">
+                            <h3>Iruzkinak:</h3>
+                            <?php
+                            $xmlFile = APP_DIR . '/conf.xml';
 
+                            if (file_exists($xmlFile)) {
+                                $xml = simplexml_load_file($xmlFile);
+
+                                if ($xml !== false && isset($xml->iruzkinak)) {
+                                    echo "<ul>";
+                                    $kontagailua = 0;
+
+                                    foreach ($xml->iruzkinak->children() as $iruzkina) {
+                                        echo "<li>" . htmlspecialchars($iruzkina) . " ";
+                                        echo "<form action='ezabatu_iruzkinak.php' method='POST' style='display:inline;'>";
+                                        echo "<input type='hidden' name='index' value='$kontagailua'>";
+
+                                        echo "</form>";
+                                        echo "</li>";
+                                        $kontagailua++;
+                                    }
+                                    echo "</ul>";
+                                } else {
+                                    echo "<p>Oraindik ez dago iruzkinik.</p>";
+                                }
+                            } else {
+                                echo "<p>Errorea: XML fitxategia ezin izan da kargatu.</p>";
+                            }
+
+
+                            ?>
+                        </div>
                         <?php
                         require_once(APP_DIR  . '/src/views/main/index/modal.php');
                         ?>
